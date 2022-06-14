@@ -33,7 +33,12 @@ async function main() {
     );
     // console.log(response.data[0]);
     for (const issue of response.data) {
-      console.log(`${issue.number}:\t${issue.title}\n\t${issue.html_url}\n`);
+      console.log(`${issue.number}:\t${issue.title}`);
+      console.log(`\t  ${issue.html_url}`);
+      console.log(`\t  Creator: ${issue.user.login}`);
+      if (issue.assignee) {
+        console.log(`\t  Assigned: ${issue.assignee.login}`);
+      }
     }
   }
 }
