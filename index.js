@@ -6,6 +6,12 @@ const octokit = new Octokit({
   userAgent: "triage-tool/v1.0.0",
 });
 
+function getLastWeeksDate() {
+  const now = new Date();
+
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+}
+
 async function main() {
   for (const repo of [
     "clarinet",
@@ -19,7 +25,7 @@ async function main() {
       "--------------------------------------------------------------------------------"
     );
     let response = await octokit.request(
-      "GET /repos/{owner}/{repo}/issues?state=open&sort=updated-desc&since=2022-06-06T00:00:00Z",
+      `GET /repos/{owner}/{repo}/issues?state=open&sort=updated-desc&since=${getLastWeeksDate().toISOString()}`,
       {
         owner: "hirosystems",
         repo: repo,
