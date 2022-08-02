@@ -1,15 +1,15 @@
-const dotenv = require("dotenv");
-dotenv.config();
-const { Octokit } = require("octokit");
+import { config } from "dotenv";
+config();
+import { Octokit } from "octokit";
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
   userAgent: "triage-tool/v1.0.0",
 });
 
-function getLastWeeksDate() {
+function getDateNDaysAgo(n) {
   const now = new Date();
 
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate() - n);
 }
 
 async function main() {
@@ -19,12 +19,25 @@ async function main() {
     "orchestra",
     // "clarinet-vscode",
   ]) {
+    let days = 7;
+    if (process.argv.length === 3) {
+      days = parseInt(process.argv[2]);
+      if (isNaN(days)) {
+        console.error(
+          "Invalid argument. Only argument should be a number of days."
+        );
+        process.exit(1);
+      }
+    }
+
     console.log("\n", repo);
     console.log(
       "--------------------------------------------------------------------------------"
     );
-    let response = await octokit.request(
-      `GET /repos/{owner}/{repo}/issues?state=open&sort=updated-desc&since=${getLastWeeksDate().toISOString()}`,
+    const response = await octokit.request(
+      `GET /repos/{owner}/{repo}/issues?state=open&sort=updated-desc&since=${getDateNDaysAgo(
+        days
+      ).toISOString()}`,
       {
         owner: "hirosystems",
         repo: repo,

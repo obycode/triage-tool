@@ -1,5 +1,6 @@
 {
   "name": "triage-tool",
+  "type": "module",
   "version": "1.0.0",
   "description": "This is a simple tool to help triage issues and PRs",
   "main": "index.js",
