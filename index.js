@@ -15,7 +15,6 @@ function getLastWeeksDate() {
 async function main() {
   for (const repo of [
     "clarinet",
-    "clarity-repl",
     "clarity-lsp",
     "orchestra",
     // "clarinet-vscode",
@@ -31,7 +30,6 @@ async function main() {
         repo: repo,
       }
     );
-    // console.log(response.data[0]);
     for (const issue of response.data) {
       console.log(`${issue.number}:\t${issue.title}`);
       console.log(`\t  ${issue.html_url}`);
