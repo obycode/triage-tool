@@ -1,6 +1,6 @@
 # Triage Tool
 
-This is a simple tool to find issues and PRs with activity in the N days (defaults to 7).
+This is a simple tool to find issues and PRs with activity in the last N days (defaults to 7).
 
 ## Usage
 
